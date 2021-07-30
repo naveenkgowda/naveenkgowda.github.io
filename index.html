@@ -6,14 +6,13 @@
 <svg width=300 height=300>
 </svg>
 <script>
-async function init() {
-    d3.csv('https://flunky.github.io/cars2017.csv')
-     .then(function (data) {
-     console.log(data)
-  });
-
-
-}
+d3.csv("data_dailycases.csv", function(data) {
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+       // console.log(data[i]);
+    }
+};
+	</script>       
 	
 </html>
 
