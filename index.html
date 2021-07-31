@@ -3,52 +3,62 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <!-- Create a div where the graph will take place for scene1 -->
 <div id="my_dataviz_scene1"></div>
+<style> circle {fill: lightblue; stroke: black;} </style>
 
 <script>
 
   // set the dimensions and margins of the graph
   var margin = { top: 50, right: 50, bottom: 50, left: 50 },
-    width = 500 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    width = 300 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
   // append the svg object to the body of the page
   var svg = d3.select("#my_dataviz_scene1")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform",
-      "translate(" + margin.left + "," + margin.top + ")");
-
+    
   d3.csv("https://flunky.github.io/cars2017.csv", function (data) {
 
     // Add X axis
-    var x = d3.scaleLinear()
-      .domain([0, 200])
-      .range([0, width]);
+    var xdomain = [10, 150];
+    var xrange = [0, width];
+    var ydomain = [10, 150];
+    var yrange = [height, 0];
 
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+    var x = d3.scaleLog()
+      .base(10)
+      .domain(xdomain)
+      .range(xrange);
 
-    // Add Y axis
-    var y = d3.scaleLinear()
-      .domain([0, 200])
-      .range([height, 0]);
+    d3.select('svg')
+      .append("g")
+      .attr("transform", "translate(" + margin.left + ", " + (height + margin.top) + ")")
+      .call(d3.axisBottom(x).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")));
 
-    svg.append("g")
-      .call(d3.axisLeft(y));
+    var y = d3.scaleLog()
+      .base(10)
+      .domain(ydomain)
+      .range(yrange);
 
-    // Add scatterplot
-    svg.append('g')
-      .selectAll("dot")
+    d3.select('svg')
+      .append("g")
+      .attr("transform", "translate(" + margin.left + ",  " + margin.top + ")")
+      .call(d3.axisLeft(y).tickValues([10, 20, 50, 100]).tickFormat(d3.format("~s")));
+
+
+
+    d3.select("svg")
+      .append('g')
+      .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+      .selectAll("circle")
       .data(data)
       .enter()
       .append("circle")
       .attr("cx", function (d) { return x(d.AverageCityMPG); })
       .attr("cy", function (d) { return y(d.AverageHighwayMPG); })
-      .attr("r", 10)
-      .style("fill", "blue");
+      .attr("r", function (d) { return Number(d.EngineCylinders) + 2; });
+
   })
 
 </script>
