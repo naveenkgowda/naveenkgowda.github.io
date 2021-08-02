@@ -124,14 +124,14 @@
           .on("mouseleave", mouseleave);
 
         //label the axis
-        svg.append("text").attr("x", (width + margin.left + margin.right) / 2).attr("y", height + margin.top + 50).text("Average City Mileage (MPG)").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", (width + margin.left + margin.right) / 2).attr("y", height + margin.top + 20).text("Avg City Mileage (MPG)").style("font-size", "15px").attr("alignment-baseline", "middle");
         svg.append("text")
           // .attr("transform", "rotate(-90)")
           .attr("x", (margin.left))
           .attr("y", (height / 2))
           //.attr("dy", "1em")
           .style("text-anchor", "middle")
-          .text("Highway Mileage");
+          .text("Avg Highway Mileage");
 
         // Handmade legend
         svg.append("circle").attr("cx", 200).attr("cy", 230).attr("r", 6).style("fill", "blue").style("opacity", .6);
