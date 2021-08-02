@@ -2,12 +2,6 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
 
-<!-- Button -->
-<div>
-  <input type="checkbox" class="checkbox" value="Gasoline" checked><label>Gasoline</label>
-  <input type="checkbox" class="checkbox" value="Diesel" checked><label>Diesel</label>
-  <input type="checkbox" class="checkbox" value="Electricity" checked><label>Electric</label>
-</div>
 <body onload="init()"></body>
 <script>
   async function init() {
@@ -16,7 +10,7 @@
       .then(function (data) {
 
         var margin = { top: 150, right: 150, bottom: 150, left: 450 },
-          width = 900 - margin.left - margin.right,
+          width = 1000 - margin.left - margin.right,
           height = 600 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
@@ -94,7 +88,7 @@
               label: "Environmental concerns drive elctric cars forward",
               title: "Electric Cars"
             },
-            x: 750,
+            x: 850,
             y: 200,
             dy: 50,
             dx: 50
@@ -104,6 +98,13 @@
         // Add annotation to the chart
         const makeAnnotations = d3.annotation()
           .annotations(annotations)
+
+        //blurb
+        svg.append("text").attr("x", 100).attr("y", 20).text("Have Electric Cars Solved Fule Efficiency Problems??").style("font-size", "25px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 100).attr("y", 50).text("Fuel efficiency has been analyzed for hundreds of cars released in 2017 in the U.S by leading car manufacturers. Although fuel efficiency has").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 100).attr("y", 70).text("improved over the years for cars that primarily use gasoline or diesel. A typical efficient car in the U.S. market gets about ~40 MPG.").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 100).attr("y", 90).text(" Possible solution could be electric cars. Notably Electric cars in the below graph show over 150 MPG. This mpg-equivalent (MPGe) figure ").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 100).attr("y", 110).text("is how the Environmental Protection Agency (EPA) converts the power used by an electric vehicle into a term that's familiar to everyone: mpg.").style("font-size", "15px").attr("alignment-baseline", "middle");
 
 
         //   d3.select("svg")
@@ -122,30 +123,26 @@
           .on("mousemove", mousemove)
           .on("mouseleave", mouseleave);
 
+        //label the axis
+        svg.append("text").attr("x", (width + margin.left + margin.right) / 2).attr("y", height + margin.top + 50).text("Average City Mileage (MPG)").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text")
+          // .attr("transform", "rotate(-90)")
+          .attr("x", (margin.left))
+          .attr("y", (height / 2))
+          //.attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Highway Mileage");
+
+        // Handmade legend
+        svg.append("circle").attr("cx", 200).attr("cy", 230).attr("r", 6).style("fill", "blue").style("opacity", .6);
+        svg.append("circle").attr("cx", 200).attr("cy", 260).attr("r", 6).style("fill", "red").style("opacity", .6);
+        svg.append("circle").attr("cx", 200).attr("cy", 290).attr("r", 6).style("fill", "green").style("opacity", .6);
+        svg.append("text").attr("x", 220).attr("y", 230).text("Gasoline").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 220).attr("y", 260).text("Diesel").style("font-size", "15px").attr("alignment-baseline", "middle");
+        svg.append("text").attr("x", 220).attr("y", 290).text("Electric").style("font-size", "15px").attr("alignment-baseline", "middle");
+
         svg.append("g")
           .call(makeAnnotations);
-
-        // This function is gonna change the opacity and size of selected and unselected circles
-        function update() {
-
-          // For each check box:
-          d3.selectAll(".checkbox").each(function (d) {
-            cb = d3.select(this);
-            grp = cb.property("value")
-
-            // If the box is check, I show the group
-            if (cb.property("checked")) {
-              svg.selectAll("." + grp).transition().duration(1000).style("opacity", 1).attr("r", "3")
-
-              // Otherwise I hide it
-            } else {
-              svg.selectAll("." + grp).transition().duration(1000).style("opacity", 0).attr("r", 0)
-            }
-          })
-        }
-
-        // When a button change, I run the update function
-        d3.selectAll(".checkbox").on("change", update);
 
       })
       .catch(function () {
