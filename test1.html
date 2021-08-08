@@ -53,9 +53,9 @@ var data = [4,8,15,16,23,42];
                     .enter()
                     .append("rect")
                     .attr("x", function (d, i) { return x(i); })
-                    .attr("y", function (d) { return (height-y(d)); })
+                    .attr("y", function (d) { return y(d); })
                     .attr("width", bandwidth)
-                    .attr("height", function (d) { return  y(d);});
+                    .attr("height", function (d) { return  height - y(d);});
 
 
 </script>
