@@ -1,6 +1,14 @@
-
-                width = 200;
-                height = 200;
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> rect {fill: lightblue; stroke: black; }</style>
+<body>
+<svg width=300 height=300>
+</svg>
+<script>
+var data = [4,8,15,16,23,42];
+  
+              width = 200;
+              height = 200;
 
                 var xdomain = [0,1,2,3,4,5];
                 var xrange = [0, width];
@@ -20,14 +28,7 @@
                 var y = d3.scaleLinear()
                     .domain(ydomain)
                     .range(yrange);
-<html>
-<script src='https://d3js.org/d3.v5.min.js'></script>
-<style> rect {fill: lightblue; stroke: black; }</style>
-<body>
-<svg width=300 height=300>
-</svg>
-<script>
-var data = [4,8,15,16,23,42];
+
                
                d3.select('svg')
                     .append("g")
